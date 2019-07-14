@@ -32,14 +32,21 @@ exports.post = (req, res) => {
 }
 
 exports.put = (req, res) => {
-    const id = req.params.id;
-    res.status(200).send({
-        id: id,
-        title: req.body
+    Product.findByIdAndUpdate(req.params.id, req.body).then(() => {
+        res.status(200).send({
+            message: "Produto atualizado com sucesso!"
+        }).catch(e => {
+            res.status(400).send(e);
+        });
     });
 }
 
 exports.delete = (req, res) => {
-    const id = req.params.id;
-    res.status(200).send();
+    Product.findByIdAndDelete(req.params.id).then(() => {
+        res.status(200).send({
+            message: "Produto removido com sucesso!"
+        }).catch(e => {
+            res.status(400).send(e);
+        });
+    });
 }
