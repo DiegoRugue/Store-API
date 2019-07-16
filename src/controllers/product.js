@@ -1,52 +1,55 @@
-const mongoose = require('mongoose');
-const Product = mongoose.model('Product');
+const repository = require('../repositories/product');
 
-exports.get = (req, res) => {
-    Product.find({active: true}, 'title slug price').then(data => {
+exports.get = async (req, res) => {
+    try {
+        const data = await repository.get();
         res.status(200).send(data);
-    }).catch(e => {
+    } catch (e) {
         res.status(400).send(e);
-    });
+    }
 }
 
-exports.getById = (req, res) => {
-    Product.findById(req.params.id).then(data => {
+exports.getById = async (req, res) => {
+    try {
+        const data = await repository.getById(req.params.id);
         res.status(200).send(data);
-    }).catch(e => {
+    } catch (e) {
         res.status(400).send(e);
-    });
+    }
 }
 
-exports.post = (req, res) => {
-    let product = new Product(req.body)
-    product.save().then(() => {
+exports.post = async (req, res) => {
+    try {
+        await repository.post(req.body);
         res.status(201).send({
             message: "Produto cadastrado com sucesso!"
-        }).catch(e => {
-            res.status(400).send({
-                message: 'Falha ao cadastrar produto',
-                data: e
-            });
         });
-    });
+    } catch (e) {
+        res.status(400).send({
+            message: 'Falha ao cadastrar produto',
+            data: e
+        });
+    }
 }
 
-exports.put = (req, res) => {
-    Product.findByIdAndUpdate(req.params.id, req.body).then(() => {
+exports.put = async (req, res) => {
+    try {
+        await repository.put(req.params.id, req.body);
         res.status(200).send({
             message: "Produto atualizado com sucesso!"
-        }).catch(e => {
-            res.status(400).send(e);
         });
-    });
+    } catch (e) {
+        res.status(400).send(e);
+    }
 }
 
-exports.delete = (req, res) => {
-    Product.findByIdAndDelete(req.params.id).then(() => {
+exports.delete = async (req, res) => {
+    try {
+        await repository.delete(req.params.id);
         res.status(200).send({
             message: "Produto removido com sucesso!"
-        }).catch(e => {
-            res.status(400).send(e);
         });
-    });
+    } catch (e) {
+        res.status(400).send(e);
+    }
 }
