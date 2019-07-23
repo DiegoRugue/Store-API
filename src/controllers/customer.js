@@ -1,4 +1,6 @@
 const repository = require('../repositories/customer');
+const md5 = require('md5');
+const email = require('../services/email');
 
 exports.get = async (req, res) => {
     try {
@@ -20,7 +22,12 @@ exports.getById = async (req, res) => {
 
 exports.post = async (req, res) => {
     try {
-        await repository.post(req.body);
+        let { password } = req.body;
+        password = md5(password + global.SALT_KEY);
+        await repository.post({ ...req.body, password: password });
+
+        email.send(req.body.email, 'Seja bem vindo', global.EMAIL_TMPL.replace('{0}', req.body.name))
+
         res.status(201).send({
             message: "Cliente cadastrado com sucesso!"
         });

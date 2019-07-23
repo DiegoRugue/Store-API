@@ -10,14 +10,14 @@ exports.getById = async (id) => {
 }
 
 exports.post = async (data) => {
-    const product = new Customer(data)
-    await product.save();
+    const customer = new Customer(data);
+    await customer.save();
 }
 
 exports.put = async (id, data) => {
-    await findByIdAndUpdate(id, data)
+    await Customer.findByIdAndUpdate(id, data);
 }
 
 exports.delete = async (id) => {
-    await findByIdAndDelete(id)
+    await Customer.findByIdAndRemove(id);
 }

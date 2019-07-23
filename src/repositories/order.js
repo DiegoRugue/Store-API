@@ -13,14 +13,14 @@ exports.getById = async (id) => {
 }
 
 exports.post = async (data) => {
-    const product = new Order(data)
-    await product.save();
+    const order = new Order(data)
+    await order.save();
 }
 
 exports.put = async (id, data) => {
-    await findByIdAndUpdate(id, data)
+    await Order.findByIdAndUpdate(id, data)
 }
 
 exports.delete = async (id) => {
-    await findByIdAndDelete(id)
+    await Order.findByIdAndDelete(id)
 }

@@ -15,9 +15,9 @@ exports.post = async (data) => {
 }
 
 exports.put = async (id, data) => {
-    await findByIdAndUpdate(id, data)
+    await Product.findByIdAndUpdate(id, data)
 }
 
 exports.delete = async (id) => {
-    await findByIdAndDelete(id)
+    await Product.findByIdAndDelete(id)
 }

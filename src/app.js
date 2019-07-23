@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const moongose = require('mongoose');
+const config = require('./config/config');
 
 const app = express();
 
@@ -13,7 +14,7 @@ const productRoute = require('./routes/product');
 const customerRoute = require('./routes/customer');
 const orderRoute = require('./routes/order');
 
-moongose.connect("mongodb+srv://gg:gg@cluster0-rs78f.mongodb.net/test?retryWrites=true&w=majority", {useNewUrlParser: true});
+moongose.connect(config.connectionString);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
