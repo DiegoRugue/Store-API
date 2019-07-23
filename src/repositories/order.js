@@ -1,16 +1,19 @@
 const mongoose = require('mongoose');
-const Customer = mongoose.model('Customer');
+const Order = mongoose.model('Order');
 
 exports.get = async () => {
-    return await Customer.find();
+    return await Order
+        .find({}, 'number status')
+        .populate('customer', 'name')
+        .populate('itens.product', 'title')
 }
 
 exports.getById = async (id) => {
-    return await Customer.findById(id);
+    return await Order.findById(id);
 }
 
 exports.post = async (data) => {
-    const product = new Customer(data)
+    const product = new Order(data)
     await product.save();
 }
 
