@@ -21,3 +21,10 @@ exports.put = async (id, data) => {
 exports.delete = async (id) => {
     await Customer.findByIdAndRemove(id);
 }
+
+exports.authenticate = async (data) => {
+    return await Customer.findOne({
+        email: data.email, 
+        password: data.password
+    });
+}
